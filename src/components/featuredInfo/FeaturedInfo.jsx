@@ -1,7 +1,8 @@
 import "./featuredInfo.css";
-import {People} from "@material-ui/icons";
+import { People } from "@material-ui/icons";
 import axios from "axios";
-import {useEffect, useState} from "react";
+import ReactAudioPlayer from 'react-audio-player';
+import { useEffect, useState } from "react";
 
 export default function FeaturedInfo() {
     const [info, setInfo] = useState({
@@ -34,7 +35,7 @@ export default function FeaturedInfo() {
             });
         }, 30000);
         return () => clearInterval(interval);
-    },[])
+    }, [])
     // useEffect(() => {
     //     const interval = setInterval(() => {
     //         const getInfo = async () => {
@@ -59,8 +60,8 @@ export default function FeaturedInfo() {
                 <div className="featuredMoneyContainer">
                     <span className="featuredMoney">{info.person}</span>
                     <span className="featuredMoneyRate">
-            < People className="featuredIcon negative"/>
-          </span>
+                        < People className="featuredIcon negative" />
+                    </span>
                 </div>
 
             </div>
@@ -76,10 +77,16 @@ export default function FeaturedInfo() {
                 <span className="featuredTitle">Độ ẩm</span>
                 <div className="featuredMoneyContainer">
                     <span className="featuredMoney">{`${info.humidity} %`}</span>
-
                 </div>
-
             </div>
+            {/* <audio autoPlay>
+                <source src="https://file01.fpt.ai/text2speech-v5/short/2022-02-07/bb35dcc541c81e6cb36f6c214b609823.mp3" />
+            </audio> */}
+            <ReactAudioPlayer
+                src="https://file01.fpt.ai/text2speech-v5/short/2022-02-07/bb35dcc541c81e6cb36f6c214b609823.mp3"
+                autoPlay
+                controls
+            />
         </div>
     );
 }
