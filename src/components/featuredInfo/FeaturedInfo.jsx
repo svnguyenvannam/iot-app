@@ -4,13 +4,35 @@ import axios from "axios";
 import ReactAudioPlayer from 'react-audio-player';
 import { useEffect, useState } from "react";
 
+const useAudio = url => {
+    const [audio] = useState(new Audio(url));
+    const [playing, setPlaying] = useState(false);
+
+    const toggle = () => setPlaying(!playing);
+
+    useEffect(() => {
+        playing ? audio.play() : audio.pause();
+    },
+        [playing]
+    );
+
+    useEffect(() => {
+        audio.addEventListener('ended', () => setPlaying(false));
+        return () => {
+            audio.removeEventListener('ended', () => setPlaying(false));
+        };
+    }, []);
+
+    return [playing, toggle];
+};
+
 export default function FeaturedInfo() {
     const [info, setInfo] = useState({
         person: Math.floor(Math.random() * 15) + 2,
         humidity: Math.floor(Math.random() * 15) + 2,
         temperature: Math.floor(Math.random() * 15) + 2
     })
-
+    const [playing, toggle] = useAudio("https://file01.fpt.ai/text2speech-v5/short/2022-02-08/1ae11c22d3c807a1b9bfb97316705b54.mp3");
     // useEffect(() => {
     //     const getInfo = async () => {
     //         try {
@@ -26,6 +48,11 @@ export default function FeaturedInfo() {
     // }, [])
     useEffect(() => {
         const interval = setInterval(() => {
+            const getData = async () => {
+                const res = await axios.get("https://minhconan.azurewebsites.net/data");
+                console.log(res.data)
+            }
+            getData()
             setInfo(() => {
                 return {
                     person: Math.floor(Math.random() * 15) + 2,
@@ -33,7 +60,10 @@ export default function FeaturedInfo() {
                     temperature: Math.floor(Math.random() * 18) + 30
                 }
             });
-        }, 30000);
+            if (info.humidity > 70 || info.humidity < 40 || info.temperature > 35 || info.temperature < 20) {
+                toggle()
+            }
+        }, 10000);
         return () => clearInterval(interval);
     }, [])
     // useEffect(() => {
@@ -69,7 +99,6 @@ export default function FeaturedInfo() {
                 <span className="featuredTitle">Nhiệt độ</span>
                 <div className="featuredMoneyContainer">
                     <span className="featuredMoney">{`${info.temperature} °C`}</span>
-
                 </div>
 
             </div>
@@ -79,14 +108,6 @@ export default function FeaturedInfo() {
                     <span className="featuredMoney">{`${info.humidity} %`}</span>
                 </div>
             </div>
-            {/* <audio autoPlay>
-                <source src="https://file01.fpt.ai/text2speech-v5/short/2022-02-07/bb35dcc541c81e6cb36f6c214b609823.mp3" />
-            </audio> */}
-            <ReactAudioPlayer
-                src="https://file01.fpt.ai/text2speech-v5/short/2022-02-07/bb35dcc541c81e6cb36f6c214b609823.mp3"
-                autoPlay
-                controls
-            />
         </div>
     );
 }
