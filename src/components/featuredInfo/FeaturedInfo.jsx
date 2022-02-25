@@ -57,7 +57,7 @@ export default function FeaturedInfo() {
                 return {
                     person: Math.floor(Math.random() * 15) + 2,
                     humidity: Math.floor(Math.random() * (95 - 73)) + 73,
-                    temperature: Math.floor(Math.random() * 18) + 30
+                    temperature: Math.floor(Math.random() * (35-10)) + 10
                 }
             });
             if (info.humidity > 70 || info.humidity < 40 || info.temperature > 35 || info.temperature < 20) {
