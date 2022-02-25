@@ -32,7 +32,7 @@ export default function FeaturedInfo() {
         humidity: Math.floor(Math.random() * 15) + 2,
         temperature: Math.floor(Math.random() * 15) + 2
     })
-    const [playing, toggle] = useAudio("https://file01.fpt.ai/text2speech-v5/short/2022-02-08/1ae11c22d3c807a1b9bfb97316705b54.mp3");
+    const [playing, toggle] = useAudio("https://file01.fpt.ai/text2speech-v5/short/2022-02-25/bb35dcc541c81e6cb36f6c214b609823.mp3");
     // useEffect(() => {
     //     const getInfo = async () => {
     //         try {
