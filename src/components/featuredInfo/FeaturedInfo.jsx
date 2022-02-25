@@ -30,7 +30,7 @@ export default function FeaturedInfo() {
     const [info, setInfo] = useState({
         person: Math.floor(Math.random() * 15) + 2,
         humidity: Math.floor(Math.random() * (95 - 73)) + 73,
-        temperature: Math.floor(Math.random() * 12) + 30
+        temperature: Math.floor(Math.random() * (35-10)) + 10
     })
     const [playing, toggle] = useAudio("https://file01.fpt.ai/text2speech-v5/short/2022-02-25/bb35dcc541c81e6cb36f6c214b609823.mp3");
     // useEffect(() => {
